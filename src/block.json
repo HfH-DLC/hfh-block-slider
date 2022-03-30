@@ -20,7 +20,12 @@
             "type": "integer"
         },
         "numberOfSlides": {
-            "type": "integer"
+            "type": "integer",
+            "default": 6
+        },
+        "overlap": {
+            "type": "boolean",
+            "default": true
         }
     }
 }

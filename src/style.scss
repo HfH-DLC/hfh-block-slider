@@ -192,4 +192,11 @@
                 }
             }
         }
+        &.hfh-slider--wide {
+            .hfh-slider__slide {
+                @media screen and (min-width: 1024px) {
+                    grid-template-columns: 1fr 80px 1fr;
+                }
+            }
+        }
     }

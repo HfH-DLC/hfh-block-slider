@@ -41,15 +41,19 @@ class Slider
 		add_post_type_support('page', 'excerpt');
 		register_block_type(__DIR__ . '/build', array(
 			'render_callback' => array($this, 'render_callback'),
-			'attributes' => array(
-				'categoryId' => array(
-					'type' => 'integer'
-				),
-				'numberOfSlides' => array(
-					'type' => 'integer',
-					'default' => 6
-				)
-			)
+			// 'attributes' => array(
+			// 	'categoryId' => array(
+			// 		'type' => 'integer'
+			// 	),
+			// 	'numberOfSlides' => array(
+			// 		'type' => 'integer',
+			// 		'default' => 6
+			// 	),
+			// 	'overlap' => array(
+			// 		'type' => 'boolean',
+			// 		'default' => true
+			// 	)
+			// )
 		));
 	}
 
@@ -59,6 +63,7 @@ class Slider
 		$this->enqueue_scripts();
 		$category_id = $block_attributes['categoryId'];
 		$alignwide = $block_attributes['align'] === "wide";
+		$overlap = $block_attributes['overlap'];
 		$number_of_slides = $block_attributes['numberOfSlides'];
 		$query = new WP_Query(array(
 			'post_type' => 'page',
@@ -68,9 +73,8 @@ class Slider
 		));
 		if ($query->have_posts()) :
 			ob_start();
-
 ?>
-			<div class="hfh-slider splide <?php if ($alignwide) : ?>alignwide<?php endif; ?>">
+			<div class="hfh-slider <?php if (!$overlap) : ?>hfh-slider--wide<?php endif; ?> splide <?php if ($alignwide) : ?>alignwide<?php endif; ?>">
 				<div class="splide__track">
 					<ul class="splide__list">
 						<!-- Slides -->

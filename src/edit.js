@@ -21,7 +21,8 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 import './editor.scss';
 
-import { SelectControl, TextControl } from '@wordpress/components';
+import { InspectorControls } from "@wordpress/block-editor";
+import { SelectControl, TextControl, PanelBody, ToggleControl } from '@wordpress/components';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -52,25 +53,38 @@ export default function Edit({ attributes, setAttributes, categories, isRequesti
 			updateCategory(categories[0].id);
 		}
 		const numberOfSlides = attributes.numberOfSlides;
+		const overlap = attributes.overlap;
 		return (
-			<div {...useBlockProps()}>
-				<div class="components-placeholder is-large">
-					<div class="components-placeholder__label">HfH Slider</div>
-					<div class="components-placeholder__instructions">Choose the category of the pages to be displayed in the slider.</div>
-					<SelectControl
-						label="Category"
-						value={selectedCategoryId}
-						options={options}
-						onChange={updateCategory}
-					/>
-					<TextControl
-						label="Number of slides to display"
-						value={numberOfSlides}
-						type="number"
-						onChange={updateNumberOfSlides}
-					/>
+			<>
+				<InspectorControls>
+					<PanelBody title="Settings" initialOpen={false}>
+						<ToggleControl
+							label="Overlap of Image and Textbox"
+							help={overlap ? "Big" : "Small"}
+							checked={overlap}
+							onChange={() => setAttributes({ overlap: !overlap })}
+						/>
+					</PanelBody>
+				</InspectorControls>
+				<div {...useBlockProps()}>
+					<div class="components-placeholder is-large">
+						<div class="components-placeholder__label">HfH Slider</div>
+						<div class="components-placeholder__instructions">Choose the category of the pages to be displayed in the slider.</div>
+						<SelectControl
+							label="Category"
+							value={selectedCategoryId}
+							options={options}
+							onChange={updateCategory}
+						/>
+						<TextControl
+							label="Number of slides to display"
+							value={numberOfSlides}
+							type="number"
+							onChange={updateNumberOfSlides}
+						/>
+					</div>
 				</div>
-			</div>
+			</>
 		);
 	}
 	return (
